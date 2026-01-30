@@ -1,18 +1,33 @@
-import { Button } from "@/components/ui/button";
-import { Sun } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+	const [clientNeed, setClientNeed] = useState("");
+	const router = useRouter();
+
+	const submit = async () => {
+		localStorage.setItem("clientNeed", clientNeed);
+		router.push("/matches");
+	};
+
 	return (
-		<main className="flex flex-col items-center justify-center min-h-screen gap-8 p-4">
-			<h1 className="text-4xl font-bold text-center">🚀 Hackathon Starter</h1>
-			<p className="text-lg text-center max-w-md">
-				This is a minimal Next.js app with Tailwind CSS and shadcn/ui
-				components. Ready for rapid prototyping and Vercel deployment.
-			</p>
-			<Button className="flex items-center gap-2" aria-label="Get Started">
-				<Sun className="w-5 h-5" aria-hidden="true" />
-				Get Started
-			</Button>
-		</main>
+		<div className="max-w-2xl mx-auto p-10">
+			<h1 className="text-3xl font-bold mb-4">AI Staffing Co-Pilot</h1>
+
+			<textarea
+				className="w-full border p-4 rounded-md"
+				rows={6}
+				placeholder="Client needs a senior data consultant to modernize legacy reporting..."
+				onChange={(e) => setClientNeed(e.target.value)}
+			/>
+
+			<button
+				onClick={submit}
+				className="mt-4 bg-black text-white px-6 py-2 rounded">
+				Find Talent Matches
+			</button>
+		</div>
 	);
 }
