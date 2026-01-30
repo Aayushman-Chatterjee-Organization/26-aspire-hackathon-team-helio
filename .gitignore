@@ -1,1 +1,46 @@
-.slingshot
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build / dist
+dist/
+build/
+out/
+
+# Caches
+.cache/
+.tmp/
+.tmp*/
+
+# Tooling / local state
+.slingshot/
+
+
+
+# Next.js
+.next/
+out/
+build/
+
+# Tailwind
+tailwind.config.js.bak
+
+# Vercel
+.vercel/

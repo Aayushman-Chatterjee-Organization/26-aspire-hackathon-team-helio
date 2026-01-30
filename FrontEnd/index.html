@@ -1,11 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FrontEnd</title>
-</head>
-<body>
-  <h1>Welcome to the FrontEnd</h1>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Your App Name</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="description"
+			content="A brief description of your app for SEO and accessibility." />
+		<!-- Prevent XSS and enforce HTTPS -->
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'self';" />
+		<!-- Main stylesheet -->
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<header>
+			<h1>Your App Name</h1>
+			<nav aria-label="Main navigation">
+				<ul>
+					<li><a href="#main-content">Skip to main content</a></li>
+					<!-- Add other nav links here -->
+				</ul>
+			</nav>
+		</header>
+		<main id="main-content" tabindex="-1">
+			<!-- App root or content gets injected here -->
+			<noscript>
+				<p>
+					This application requires JavaScript to run. Please enable JavaScript
+					in your browser.
+				</p>
+			</noscript>
+			<div id="app-root"></div>
+		</main>
+		<footer>
+			<p>© 2024 Your Company. All rights reserved.</p>
+		</footer>
+		<!-- Main JavaScript bundle -->
+		<script src="main.js" defer></script>
+	</body>
 </html>
