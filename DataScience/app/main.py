@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 # Load environment variables before importing agents
@@ -25,6 +26,16 @@ app = FastAPI(
     title="Smatch API",
     description="AI-Powered Candidate Matching using PydanticAI and AskBodhi",
     version="0.2.0",
+)
+
+# CHANGE: Add CORS middleware to handle OPTIONS requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with specific origins
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
@@ -126,6 +137,15 @@ async def generate_job_description(request: JobDescriptionRequest):
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.options("/generate-jd")
+async def generate_job_description_options():
+    """Options endpoint for generate_job_description"""
+    return {"status": "ok"}
+
+@app.options("/match")
+async def match_candidates_options():
+    """Options endpoint for match_candidates"""
+    return {"status": "ok"}
 
 def main():
     """Run the FastAPI server."""

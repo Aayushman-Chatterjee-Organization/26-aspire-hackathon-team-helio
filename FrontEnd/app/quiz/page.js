@@ -25,8 +25,9 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-// Mock API responses from api-contract.json
-import { mockJobDescriptionResponse } from "../../mockApiResponses";
+// Import API service
+import { generateJobDescription } from "../../services/api-services";
+
 import { uniqueSkills } from "../data/mockTalents";
 import {
 	noticePeriodOptions,
@@ -39,6 +40,7 @@ export default function QuizPage() {
 	const [currentStep, setCurrentStep] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
+	const [error, setError] = useState(null);
 
 	// Form data
 	const [formData, setFormData] = useState({
@@ -150,13 +152,35 @@ export default function QuizPage() {
 
 	const handleGenerateJobDescription = async () => {
 		setIsLoading(true);
+		setError(null);
 
-		// Simulate API call to /jobDescription
-		setTimeout(() => {
-			setJobDescription(mockJobDescriptionResponse.job_description);
-			setCurrentStep(2);
+		try {
+			// Prepare the payload for the API
+			const payload = {
+				required_skills: formData.required_skills,
+				min_experience: parseInt(formData.min_experience),
+				notice_period: formData.notice_period,
+				craft: formData.craft,
+				industry: formData.industry,
+			};
+
+			// Call the actual API
+			const response = await generateJobDescription(payload);
+
+			if (response && response.job_description) {
+				setJobDescription(response.job_description);
+				setCurrentStep(2);
+			} else {
+				throw new Error("Invalid response from server");
+			}
+		} catch (err) {
+			console.error("Error generating job description:", err);
+			setError(
+				err.message || "Failed to generate job description. Please try again.",
+			);
+		} finally {
 			setIsLoading(false);
-		}, 1500);
+		}
 	};
 
 	const handleFindCandidates = async () => {
@@ -165,10 +189,10 @@ export default function QuizPage() {
 		// Store the job description in sessionStorage for the matches page
 		sessionStorage.setItem("jobDescription", jobDescription);
 
-		// Simulate API call to /recommend
+		// Navigate to matches page
 		setTimeout(() => {
 			router.push("/matches?source=quiz");
-		}, 1500);
+		}, 500);
 	};
 
 	const isFormValid = () => {
@@ -229,6 +253,13 @@ export default function QuizPage() {
 						</div>
 					</div>
 				</div>
+
+				{/* Error Alert */}
+				{error && (
+					<div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
+						<p className="text-red-800">{error}</p>
+					</div>
+				)}
 
 				{/* Step 1: Requirements Form */}
 				{currentStep === 1 && (
