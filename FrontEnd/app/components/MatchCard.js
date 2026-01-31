@@ -3,13 +3,13 @@
 import { useState } from "react";
 import WhyMatchModal from "./WhyMatchModal";
 
-export default function MatchCard({ match, onSelect }) {
+export default function MatchCard({ candidate, rank }) {
 	const [showWhyMatch, setShowWhyMatch] = useState(false);
 	const [showAIReasoning, setShowAIReasoning] = useState(false);
 
-	// Determine confidence level and styling
+	// Determine confidence level and styling based on match_score
 	const getConfidenceStyle = () => {
-		if (match.score < 60) {
+		if (candidate.match_score < 60) {
 			return {
 				bgColor: "bg-yellow-50",
 				borderColor: "border-yellow-300",
@@ -17,7 +17,7 @@ export default function MatchCard({ match, onSelect }) {
 				scoreColor: "text-yellow-600",
 				message: "Low confidence match - Review carefully",
 			};
-		} else if (match.score >= 85) {
+		} else if (candidate.match_score >= 85) {
 			return {
 				bgColor: "bg-green-50",
 				borderColor: "border-green-300",
@@ -37,64 +37,62 @@ export default function MatchCard({ match, onSelect }) {
 
 	const confidenceStyle = getConfidenceStyle();
 
+	// Extract first matched skill for display
+	const primarySkill = candidate.skills_match?.matched?.[0] || "N/A";
+
+	// Count matched vs missing skills
+	const matchedCount = candidate.skills_match?.matched?.length || 0;
+	const missingCount = candidate.skills_match?.missing?.length || 0;
+
 	const aiReasoningData = {
 		dataPoints: [
 			{
-				source: "Resume Analysis",
-				confidence: 92,
-				insight: "Strong technical skills alignment",
+				source: "Skills Analysis",
+				confidence: matchedCount > 0 ? Math.min(90, matchedCount * 20) : 10,
+				insight: `${matchedCount} skills matched, ${missingCount} missing`,
 			},
 			{
-				source: "LinkedIn Profile",
-				confidence: 88,
-				insight: "Relevant industry experience",
+				source: "Experience Match",
+				confidence: candidate.match_score,
+				insight: candidate.experience_match?.substring(0, 100) + "...",
 			},
 			{
-				source: "GitHub Activity",
-				confidence: 85,
-				insight: "Active open-source contributor",
+				source: "Strengths Assessment",
+				confidence: candidate.strengths?.length > 2 ? 75 : 50,
+				insight: `${candidate.strengths?.length || 0} key strengths identified`,
 			},
 			{
-				source: "Cultural Fit",
-				confidence: match.score < 60 ? 45 : 78,
-				insight:
-					match.score < 60
-						? "Limited cultural indicators"
-						: "Good team fit indicators",
+				source: "Gap Analysis",
+				confidence: candidate.gaps?.length < 3 ? 80 : 40,
+				insight: `${candidate.gaps?.length || 0} gaps identified`,
 			},
 		],
-		reasoning:
-			match.score < 60
-				? "This match has lower confidence due to limited data availability and partial skill alignment. Manual review recommended to verify fit."
-				: "AI analysis shows strong alignment across multiple dimensions. The candidate's experience and skills closely match the role requirements.",
-		recommendation:
-			match.score < 60
-				? "Schedule screening call to validate match"
-				: "Proceed with interview process",
+		reasoning: candidate.explanation,
+		recommendation: candidate.recommendation,
 	};
 
 	return (
 		<>
 			<div
 				className={`${confidenceStyle.bgColor} rounded-lg shadow-md p-6 hover:shadow-lg transition-all cursor-pointer border-2 ${confidenceStyle.borderColor}`}
-				onClick={() => onSelect(match)}
-				onKeyDown={(e) => e.key === "Enter" && onSelect(match)}
+				onClick={() => console.log("View candidate details:", candidate)}
+				onKeyDown={(e) =>
+					e.key === "Enter" && console.log("View candidate details:", candidate)
+				}
 				tabIndex={0}
 				role="button"
-				aria-label={`View match details for ${match.talent.name}`}>
+				aria-label={`View match details for ${candidate.candidate_name}`}>
 				<div className="flex justify-between items-start mb-4">
 					<div>
 						<h3 className="text-lg font-semibold text-gray-900">
-							{match.talent.name}
+							{candidate.candidate_name}
 						</h3>
-						<p className="text-sm text-gray-600">{match.talent.title}</p>
-						<p className="text-xs text-gray-500 mt-1">
-							{match.talent.location}
-						</p>
+						<p className="text-sm text-gray-600">Rank #{rank}</p>
+						<p className="text-xs text-gray-500 mt-1">{primarySkill}</p>
 					</div>
 					<div className="text-right">
 						<div className={`text-2xl font-bold ${confidenceStyle.scoreColor}`}>
-							{match.score}%
+							{candidate.match_score}%
 						</div>
 						<div className={`text-xs ${confidenceStyle.textColor}`}>
 							{confidenceStyle.message}
@@ -103,7 +101,7 @@ export default function MatchCard({ match, onSelect }) {
 				</div>
 
 				{/* Low Confidence Warning */}
-				{match.score < 60 && (
+				{candidate.match_score < 60 && (
 					<div
 						className="mb-4 p-3 bg-yellow-100 border border-yellow-400 rounded-md"
 						role="alert">
@@ -119,7 +117,7 @@ export default function MatchCard({ match, onSelect }) {
 								/>
 							</svg>
 							<span className="text-sm font-medium">
-								Limited data available for matching
+								{candidate.recommendation}
 							</span>
 						</div>
 					</div>
@@ -127,23 +125,25 @@ export default function MatchCard({ match, onSelect }) {
 
 				<div className="mb-4">
 					<div className="flex flex-wrap gap-2">
-						{match.talent.skills.slice(0, 3).map((skill) => (
-							<span
-								key={skill}
-								className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
-								{skill}
-							</span>
-						))}
-						{match.talent.skills.length > 3 && (
+						{candidate.skills_match?.matched
+							?.slice(0, 3)
+							.map((skill, index) => (
+								<span
+									key={index}
+									className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">
+									{skill}
+								</span>
+							))}
+						{candidate.skills_match?.matched?.length > 3 && (
 							<span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
-								+{match.talent.skills.length - 3} more
+								+{candidate.skills_match.matched.length - 3} more
 							</span>
 						)}
 					</div>
 				</div>
 
 				<div className="text-sm text-gray-600 mb-4">
-					<p className="line-clamp-2">{match.matchReason}</p>
+					<p className="line-clamp-2">{candidate.explanation}</p>
 				</div>
 
 				<div className="flex gap-2">
@@ -185,7 +185,7 @@ export default function MatchCard({ match, onSelect }) {
 
 			{showWhyMatch && (
 				<WhyMatchModal
-					talent={match.talent} // CHANGE: Pass match.talent instead of match
+					talent={candidate}
 					isOpen={showWhyMatch}
 					onClose={() => setShowWhyMatch(false)}
 				/>
@@ -271,11 +271,15 @@ export default function MatchCard({ match, onSelect }) {
 									<h3 className="text-lg font-semibold mb-3">Recommendation</h3>
 									<div
 										className={`rounded-lg p-4 ${
-											match.score < 60 ? "bg-yellow-50" : "bg-green-50"
+											candidate.match_score < 60
+												? "bg-yellow-50"
+												: "bg-green-50"
 										}`}>
 										<p
 											className={`font-medium ${
-												match.score < 60 ? "text-yellow-700" : "text-green-700"
+												candidate.match_score < 60
+													? "text-yellow-700"
+													: "text-green-700"
 											}`}>
 											{aiReasoningData.recommendation}
 										</p>

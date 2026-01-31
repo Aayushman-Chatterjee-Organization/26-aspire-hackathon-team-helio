@@ -4,6 +4,11 @@ Flow: keyword_extractor -> parallel_faceted_search -> ranking_specialist
 """
 
 import os
+
+from dotenv import load_dotenv
+
+# Load environment variables before importing agents
+load_dotenv(override=True)
 from app.models import SmatchDeps, RankedCandidatesOutput
 from app.agents import keyword_extractor, ranking_specialist
 from app.tools.bodhi_search import parallel_faceted_search
