@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 import openai
+import logfire
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
@@ -23,6 +24,8 @@ from app.models import (
 )
 from app.tools.bodhi_search import bodhi_search
 
+logfire.configure()
+logfire.instrument_pydantic_ai()
 
 # Configure the OpenAI-compatible model via Bodhi LLM Gateway
 client = openai.AsyncOpenAI(
