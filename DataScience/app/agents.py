@@ -5,6 +5,11 @@ Three agents that work sequentially for candidate matching.
 
 import os
 
+from dotenv import load_dotenv
+
+# Load environment variables before importing agents
+load_dotenv(override=True)
+
 import openai
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIChatModel

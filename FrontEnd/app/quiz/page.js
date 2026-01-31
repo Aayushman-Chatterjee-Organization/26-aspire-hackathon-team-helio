@@ -21,6 +21,7 @@ import {
 	Check,
 	Plus,
 	ChevronDown,
+	X,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -58,10 +59,18 @@ export default function QuizPage() {
 	const dropdownRef = useRef(null);
 	const inputRef = useRef(null);
 
-	// Filter available skills (exclude already selected ones)
-	const availableSkills = uniqueSkills.filter(
-		(skill) => !formData.required_skills.includes(skill),
-	);
+	// Get skills based on selected craft
+	const getAvailableSkills = () => {
+		if (!formData.craft || !uniqueSkills[formData.craft]) {
+			return [];
+		}
+		// Filter out already selected skills
+		return uniqueSkills[formData.craft].filter(
+			(skill) => !formData.required_skills.includes(skill),
+		);
+	};
+
+	const availableSkills = getAvailableSkills();
 
 	// Filter skills based on search term
 	const filteredSkills = availableSkills.filter((skill) =>
@@ -84,6 +93,15 @@ export default function QuizPage() {
 	useEffect(() => {
 		setHighlightedIndex(0);
 	}, [skillSearchTerm]);
+
+	// Reset skills when craft changes
+	useEffect(() => {
+		setFormData((prev) => ({
+			...prev,
+			required_skills: [],
+		}));
+		setSkillSearchTerm("");
+	}, [formData.craft]);
 
 	const handleSkillSelect = (skill) => {
 		setFormData((prev) => ({
@@ -222,59 +240,109 @@ export default function QuizPage() {
 							</CardDescription>
 						</CardHeader>
 						<CardContent className="space-y-6">
-							{/* Required Skills */}
+							{/* Craft - Moved before skills */}
 							<div className="space-y-2">
-								<Label htmlFor="skills">Required Skills *</Label>
+								<Label htmlFor="craft">Craft/Department *</Label>
+								<select
+									id="craft"
+									value={formData.craft}
+									onChange={(e) =>
+										setFormData((prev) => ({ ...prev, craft: e.target.value }))
+									}
+									className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+									required>
+									<option value="">Select craft</option>
+									{craftOptions.map((option) => (
+										<option key={option.value} value={option.value}>
+											{option.label}
+										</option>
+									))}
+								</select>
+							</div>
+
+							{/* Required Skills - Only visible when craft is selected */}
+							<div className="space-y-2">
+								<Label
+									htmlFor="skills"
+									className={!formData.craft ? "text-gray-400" : ""}>
+									Required Skills *
+								</Label>
 								<div className="space-y-2">
 									<div className="relative" ref={dropdownRef}>
 										<div className="relative">
 											<Input
 												ref={inputRef}
 												id="skills"
-												placeholder="Search for skills..."
+												placeholder={
+													formData.craft
+														? "Search for skills..."
+														: "Select a craft first"
+												}
 												value={skillSearchTerm}
 												onChange={(e) => {
 													setSkillSearchTerm(e.target.value);
 													setShowSkillDropdown(true);
 												}}
-												onFocus={() => setShowSkillDropdown(true)}
+												onFocus={() =>
+													formData.craft && setShowSkillDropdown(true)
+												}
 												onKeyDown={handleKeyDown}
-												className="pr-10 placeholder:text-gray-600"
+												disabled={!formData.craft}
+												className={`pr-10 placeholder:text-gray-600 ${!formData.craft ? "bg-gray-50 cursor-not-allowed" : ""}`}
 												aria-describedby="skills-help"
 												aria-expanded={showSkillDropdown}
 												aria-controls="skills-dropdown"
 												aria-autocomplete="list"
 												role="combobox"
 											/>
-											<ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+											<ChevronDown
+												className={`absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 pointer-events-none ${!formData.craft ? "text-gray-300" : "text-gray-400"}`}
+											/>
 										</div>
 
 										{/* Dropdown */}
-										{showSkillDropdown && filteredSkills.length > 0 && (
-											<div
-												id="skills-dropdown"
-												className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
-												role="listbox">
-												{filteredSkills.map((skill, index) => (
-													<button
-														key={skill}
-														type="button"
-														onClick={() => handleSkillSelect(skill)}
-														onMouseEnter={() => setHighlightedIndex(index)}
-														className={`w-full px-3 py-2 text-left hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ${
-															index === highlightedIndex ? "bg-gray-100" : ""
-														}`}
-														role="option"
-														aria-selected={index === highlightedIndex}>
-														{skill}
-													</button>
-												))}
-											</div>
-										)}
+										{showSkillDropdown &&
+											filteredSkills.length > 0 &&
+											formData.craft && (
+												<div
+													id="skills-dropdown"
+													className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+													role="listbox">
+													{/* Close button for dropdown */}
+													<div className="sticky top-0 bg-white border-b border-gray-200 p-2 flex justify-between items-center">
+														<span className="text-sm font-medium text-gray-700">
+															{formData.craft} Skills
+														</span>
+														<button
+															type="button"
+															onClick={() => setShowSkillDropdown(false)}
+															className="p-1 hover:bg-gray-100 rounded-md transition-colors"
+															aria-label="Close skills dropdown">
+															<X className="w-4 h-4 text-gray-500" />
+														</button>
+													</div>
+													{filteredSkills.map((skill, index) => (
+														<button
+															key={skill}
+															type="button"
+															onClick={() => handleSkillSelect(skill)}
+															onMouseEnter={() => setHighlightedIndex(index)}
+															className={`w-full px-3 py-2 text-left hover:bg-gray-100 focus:bg-gray-100 focus:outline-none ${
+																index === highlightedIndex ? "bg-gray-100" : ""
+															}`}
+															role="option"
+															aria-selected={index === highlightedIndex}>
+															{skill}
+														</button>
+													))}
+												</div>
+											)}
 									</div>
 
 									<p id="skills-help" className="text-sm text-gray-600">
-										Search and select skills from the list
+										{formData.craft
+											? "Search and select skills from the list"
+											: "Select a craft to see available skills"}
 									</p>
 
 									{/* Selected Skills */}
@@ -283,24 +351,23 @@ export default function QuizPage() {
 										role="list"
 										aria-label="Selected skills">
 										{formData.required_skills.map((skill) => (
-											<Badge
+											<div
 												key={skill}
-												variant="secondary"
-												className="pl-3 pr-1 py-1"
+												className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-700 rounded-md text-sm font-medium"
 												role="listitem">
-												{skill}
+												<span>{skill}</span>
 												<button
 													type="button"
 													onClick={() => handleRemoveSkill(skill)}
-													className="ml-2 hover:text-destructive"
+													className="ml-1 text-gray-500 hover:text-gray-700 focus:outline-none"
 													aria-label={`Remove ${skill}`}>
-													×
+													<X className="w-3.5 h-3.5" />
 												</button>
-											</Badge>
+											</div>
 										))}
 									</div>
 
-									{formData.required_skills.length === 0 && (
+									{formData.craft && formData.required_skills.length === 0 && (
 										<p className="text-sm text-gray-500">
 											No skills selected yet
 										</p>
@@ -343,26 +410,6 @@ export default function QuizPage() {
 									required>
 									<option value="">Select notice period</option>
 									{noticePeriodOptions.map((option) => (
-										<option key={option.value} value={option.value}>
-											{option.label}
-										</option>
-									))}
-								</select>
-							</div>
-
-							{/* Craft */}
-							<div className="space-y-2">
-								<Label htmlFor="craft">Craft/Department *</Label>
-								<select
-									id="craft"
-									value={formData.craft}
-									onChange={(e) =>
-										setFormData((prev) => ({ ...prev, craft: e.target.value }))
-									}
-									className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
-									required>
-									<option value="">Select craft</option>
-									{craftOptions.map((option) => (
 										<option key={option.value} value={option.value}>
 											{option.label}
 										</option>

@@ -8,12 +8,11 @@ export const noticePeriodOptions = [
 ];
 
 export const craftOptions = [
-	{ value: "XT|DE", label: "Experience Technology | Data Engineering" },
-	{ value: "XT|FE", label: "Experience Technology | Frontend" },
-	{ value: "XT|BE", label: "Experience Technology | Backend" },
-	{ value: "DS", label: "Data Science" },
-	{ value: "PM", label: "Product Management" },
-	{ value: "UX", label: "User Experience" },
+	{ value: "Engineering", label: "Engineering" },
+	{ value: "Data", label: "Data" },
+	{ value: "Experience", label: "Experience" },
+	{ value: "Product", label: "Product" },
+	{ value: "Strategy", label: "Strategy" },
 ];
 
 export const industryOptions = [
