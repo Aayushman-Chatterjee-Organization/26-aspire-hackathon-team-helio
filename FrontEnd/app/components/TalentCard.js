@@ -6,12 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Calendar, MapPin, DollarSign, Info } from "lucide-react";
 
-export default function TalentCard({ talent, onViewDetails }) {
+export default function TalentCard({ talent, onViewDetails, onSelect }) {
 	const getFitScoreColor = (score) => {
 		if (score >= 90) return "text-green-600";
 		if (score >= 80) return "text-yellow-600";
 		return "text-orange-600";
 	};
+
+	// Use matchScore if fitScore is not available
+	const score = talent.fitScore || talent.matchScore || 0;
 
 	return (
 		<Card className="hover:shadow-lg transition-shadow">
@@ -19,21 +22,22 @@ export default function TalentCard({ talent, onViewDetails }) {
 				<div className="flex justify-between items-start">
 					<div>
 						<CardTitle className="text-lg">{talent.name}</CardTitle>
-						<p className="text-sm text-muted-foreground">{talent.role}</p>
+						<p className="text-sm text-muted-foreground">
+							{talent.role || talent.title}
+						</p>
 					</div>
 					<div className="text-right">
-						<div
-							className={`text-2xl font-bold ${getFitScoreColor(talent.fitScore)}`}>
-							{talent.fitScore}%
+						<div className={`text-2xl font-bold ${getFitScoreColor(score)}`}>
+							{score}%
 						</div>
-						<p className="text-xs text-muted-foreground">Fit Score</p>
+						<p className="text-xs text-muted-foreground">Match Score</p>
 					</div>
 				</div>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				<div>
 					<p className="text-sm text-muted-foreground mb-1">Match Strength</p>
-					<Progress value={talent.fitScore} className="h-2" />
+					<Progress value={score} className="h-2" />
 				</div>
 
 				<div>
@@ -67,13 +71,24 @@ export default function TalentCard({ talent, onViewDetails }) {
 					</div>
 				</div>
 
-				<Button
-					onClick={() => onViewDetails(talent)}
-					className="w-full"
-					variant="outline">
-					<Info className="w-4 h-4 mr-2" />
-					Why this match?
-				</Button>
+				{onViewDetails && (
+					<Button
+						onClick={() => onViewDetails(talent)}
+						className="w-full"
+						variant="outline">
+						<Info className="w-4 h-4 mr-2" />
+						Why this match?
+					</Button>
+				)}
+
+				{onSelect && !onViewDetails && (
+					<Button
+						onClick={() => onSelect(talent)}
+						className="w-full"
+						variant="outline">
+						View Details
+					</Button>
+				)}
 			</CardContent>
 		</Card>
 	);

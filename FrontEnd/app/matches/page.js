@@ -25,7 +25,8 @@ export default function MatchesPage() {
 		const matchesSearch =
 			searchTerm === "" ||
 			talent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			talent.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			(talent.title &&
+				talent.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
 			talent.skills.some((skill) =>
 				skill.toLowerCase().includes(searchTerm.toLowerCase()),
 			);
@@ -56,7 +57,7 @@ export default function MatchesPage() {
 					variant="ghost"
 					className="mb-4">
 					<ArrowLeft className="w-4 h-4 mr-2" />
-					Back to Chat
+					Back to Dashboard
 				</Button>
 
 				<h1 className="text-3xl font-bold">Talent Matches</h1>
