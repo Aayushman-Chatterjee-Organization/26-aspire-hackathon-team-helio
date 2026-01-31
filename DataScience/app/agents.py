@@ -28,7 +28,7 @@ from app.tools.bodhi_search import bodhi_search
 client = openai.AsyncOpenAI(
     base_url=os.getenv("BODHI_LLM_GATEWAY_URL"),
     api_key="",
-    default_headers={"Authorization": os.getenv("BODHI_API_KEY")},
+    default_headers={"Authorization": os.getenv("BODHI_LLM_GATEWAY_API_KEY")},
 )
 provider = OpenAIProvider(openai_client=client)
 model = OpenAIChatModel("gpt-5.1", provider=provider)
