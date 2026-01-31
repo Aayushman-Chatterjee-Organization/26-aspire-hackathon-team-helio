@@ -15,7 +15,7 @@ gcloud run deploy hackathon-26-ml \
  --min-instances=0 \
  --max-instances=5 \
  --port=8080 \
- --timeout=60 \
+ --timeout=300 \
  --automatic-updates \
  --quiet \
  --set-env-vars="BODHI_API_KEY=<placeholder>,ASK_BODHI_API_URL=https://askbodhi-backend-api.dev.psbodhi.live,BODHI_LLM_GATEWAY_URL=https://bodhi-llm-gateway.dev.psbodhi.live,DEFAULT_COLLECTION_NAME=helio"
