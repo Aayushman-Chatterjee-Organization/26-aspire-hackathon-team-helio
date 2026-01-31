@@ -86,7 +86,7 @@ export default function Home() {
 			{/* Skip to main content link for accessibility */}
 			<a
 				href="#main-content"
-				className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">
+				className="fixed left-1/2 -translate-x-1/2 top-0 -translate-y-full focus:translate-y-0 bg-blue-600 text-white px-6 py-3 rounded-b-lg shadow-lg transition-transform duration-200 z-50 font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
 				Skip to main content
 			</a>
 

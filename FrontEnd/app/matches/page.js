@@ -51,7 +51,7 @@ export default function MatchesPage() {
 
 	return (
 		<main className="container mx-auto p-4 max-w-7xl">
-			<div className="mb-6">
+			<header className="mb-6">
 				<Button
 					onClick={() => router.push("/")}
 					variant="ghost"
@@ -64,11 +64,11 @@ export default function MatchesPage() {
 				<p className="text-muted-foreground mt-1">
 					Browse and filter available talent
 				</p>
-			</div>
+			</header>
 
 			<div className="space-y-6">
 				{/* Search and Filter Section */}
-				<div className="bg-card border rounded-lg p-4 space-y-4">
+				<section className="bg-card border rounded-lg p-4 space-y-4">
 					<div className="relative">
 						<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
 						<Input
@@ -99,10 +99,10 @@ export default function MatchesPage() {
 							))}
 						</div>
 					</div>
-				</div>
+				</section>
 
 				{/* Results Section */}
-				<div>
+				<section>
 					<p className="text-sm text-muted-foreground mb-4">
 						Showing {filteredTalents.length} of {mockTalents.length} talents
 					</p>
@@ -124,7 +124,7 @@ export default function MatchesPage() {
 							</p>
 						</div>
 					)}
-				</div>
+				</section>
 			</div>
 
 			<WhyMatchModal

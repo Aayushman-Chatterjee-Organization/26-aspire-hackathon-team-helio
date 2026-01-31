@@ -30,9 +30,9 @@ export default function Header() {
 	const navigation = [
 		{ name: "Dashboard", href: "/", icon: Home },
 		{ name: "Matches", href: "/matches", icon: Users },
-		{ name: "AI Insights", href: "/insights", icon: Brain },
-		{ name: "Analytics", href: "/analytics", icon: BarChart3 },
-		{ name: "Settings", href: "/settings", icon: Settings },
+		// { name: "AI Insights", href: "/insights", icon: Brain },
+		// { name: "Analytics", href: "/analytics", icon: BarChart3 },
+		// { name: "Settings", href: "/settings", icon: Settings },
 	];
 
 	return (
