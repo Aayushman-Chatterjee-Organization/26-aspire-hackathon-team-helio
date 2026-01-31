@@ -44,3 +44,7 @@ tailwind.config.js.bak
 
 # Vercel
 .vercel/
+
+.env
+.DS_Store
+__pycache__/

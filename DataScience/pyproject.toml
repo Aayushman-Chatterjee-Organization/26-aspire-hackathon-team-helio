@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "smatch"
+version = "0.2.0"
+description = "An Agentic AI solution for bridging the matching gap between candidates and available roles"
+authors = ["Arfath Ahmed Syed <arfiarfath21@gmail.com>"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.scripts]
+smatch = "app.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic-ai = "*"
+openai = "*"
+aiohttp = "*"
+python-dotenv = "*"
+fastapi = "*"
+uvicorn = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
