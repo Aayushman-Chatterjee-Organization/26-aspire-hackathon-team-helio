@@ -49,7 +49,7 @@ async def bodhi_search(ctx: RunContext[SmatchDeps], search_query: str) -> str:
             },
             "generative_config": {
                 "model_provider": os.getenv("MODEL_PROVIDER", "openai"),
-                "model_name": os.getenv("MODEL_NAME", "gpt-5.1"),
+                "model_name": os.getenv("MODEL_NAME", "gpt-4o"),
             },
         }
 

@@ -31,7 +31,7 @@ client = openai.AsyncOpenAI(
     default_headers={"Authorization": os.getenv("BODHI_LLM_GATEWAY_API_KEY")},
 )
 provider = OpenAIProvider(openai_client=client)
-model = OpenAIChatModel("gpt-5.1", provider=provider)
+model = OpenAIChatModel(os.getenv("MODEL_NAME", "gpt-4o"), provider=provider)
 
 
 # ============================================================================
