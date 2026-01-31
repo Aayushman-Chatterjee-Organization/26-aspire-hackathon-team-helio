@@ -6,7 +6,6 @@ import TalentCard from "./components/TalentCard";
 import Chat from "./components/Chat";
 import WhyMatchModal from "./components/WhyMatchModal";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MessageSquare } from "lucide-react";
 
@@ -83,43 +82,19 @@ export default function Home() {
 	};
 
 	return (
-		<main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+		<>
 			{/* Skip to main content link for accessibility */}
 			<a
 				href="#main-content"
-				className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded">
+				className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50">
 				Skip to main content
 			</a>
-
-			{/* Header with PS AI Tools Attribution */}
-			<header className="bg-white shadow-sm border-b border-gray-200">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-					<div className="flex justify-between items-center">
-						<h1 className="text-2xl font-bold text-gray-900">
-							Talent Match AI
-						</h1>
-						<div className="flex items-center space-x-4">
-							<div className="text-sm text-gray-600">
-								Powered by PS AI Tools:
-								<span className="ml-2 font-semibold text-blue-600">
-									Bodhi
-								</span>{" "}
-								(Profile Enrichment)
-								<span className="ml-2 font-semibold text-purple-600">
-									Slingshot
-								</span>{" "}
-								(AI Orchestration)
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
 
 			{/* Navigation Tabs */}
 			<nav
 				className="bg-white border-b border-gray-200"
 				role="navigation"
-				aria-label="Main navigation">
+				aria-label="Section navigation">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex space-x-8">
 						{["overview", "impact", "hypothesis", "flywheel", "operating"].map(
@@ -146,61 +121,75 @@ export default function Home() {
 				className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 				{/* Overview Section */}
 				{activeSection === "overview" && (
-					<div className="space-y-8">
-						<div className="bg-white rounded-lg shadow-md p-6">
-							<h2 className="text-xl font-semibold mb-4">
-								AI-Powered Talent Matching
-							</h2>
-							<p className="text-gray-600 mb-6">
-								Leveraging advanced AI to connect the right talent with the
-								right opportunities, reducing time-to-hire while improving match
-								quality.
-							</p>
-							<Link
-								href="/matches"
-								className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-								aria-label="View talent matches">
-								View Matches
-								<svg
-									className="ml-2 w-5 h-5"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24">
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M9 5l7 7-7 7"
-									/>
-								</svg>
-							</Link>
-						</div>
+					<section aria-labelledby="overview-heading">
+						<h1 id="overview-heading" className="sr-only">
+							AI-Powered Talent Matching Overview
+						</h1>
+						<div className="space-y-8">
+							<article className="bg-white rounded-lg shadow-md p-6">
+								<h2 className="text-2xl font-bold mb-4">
+									AI-Powered Talent Matching
+								</h2>
+								<p className="text-gray-600 mb-6">
+									Leveraging advanced AI to connect the right talent with the
+									right opportunities, reducing time-to-hire while improving
+									match quality.
+								</p>
+								<Link
+									href="/matches"
+									className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+									aria-label="View talent matches">
+									View Matches
+									<svg
+										className="ml-2 w-5 h-5"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24">
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M9 5l7 7-7 7"
+										/>
+									</svg>
+								</Link>
+							</article>
 
-						{/* Talent Grid */}
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-							{mockTalents.slice(0, 6).map((talent) => (
-								<TalentCard
-									key={talent.id}
-									talent={talent}
-									onViewDetails={handleViewDetails}
-								/>
-							))}
+							{/* Talent Grid */}
+							<section aria-labelledby="featured-talents">
+								<h2
+									id="featured-talents"
+									className="text-xl font-semibold mb-4">
+									Featured Talents
+								</h2>
+								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+									{mockTalents.slice(0, 6).map((talent) => (
+										<TalentCard
+											key={talent.id}
+											talent={talent}
+											onViewDetails={handleViewDetails}
+										/>
+									))}
+								</div>
+							</section>
 						</div>
-					</div>
+					</section>
 				)}
 
 				{/* Business Impact Section */}
 				{activeSection === "impact" && (
-					<div className="bg-white rounded-lg shadow-md p-8">
-						<h2 className="text-2xl font-bold mb-6">
+					<section
+						aria-labelledby="impact-heading"
+						className="bg-white rounded-lg shadow-md p-8">
+						<h1 id="impact-heading" className="text-3xl font-bold mb-6">
 							Primary User + Business Impact
-						</h2>
+						</h1>
 
 						<div className="grid md:grid-cols-2 gap-8 mb-8">
-							<div>
-								<h3 className="text-lg font-semibold mb-4 text-gray-900">
+							<article>
+								<h2 className="text-xl font-semibold mb-4 text-gray-900">
 									Primary Users
-								</h3>
+								</h2>
 								<ul className="space-y-3">
 									<li className="flex items-start">
 										<span className="text-blue-500 mr-2">•</span>
@@ -224,12 +213,12 @@ export default function Home() {
 										</div>
 									</li>
 								</ul>
-							</div>
+							</article>
 
-							<div>
-								<h3 className="text-lg font-semibold mb-4 text-gray-900">
+							<aside>
+								<h2 className="text-xl font-semibold mb-4 text-gray-900">
 									Business Impact Metrics
-								</h3>
+								</h2>
 								<div className="space-y-4">
 									{Object.entries(businessImpactData).map(([key, value]) => (
 										<div key={key} className="bg-gray-50 p-4 rounded-lg">
@@ -242,45 +231,47 @@ export default function Home() {
 										</div>
 									))}
 								</div>
-							</div>
+							</aside>
 						</div>
-					</div>
+					</section>
 				)}
 
 				{/* Product Hypothesis & Roadmap */}
 				{activeSection === "hypothesis" && (
-					<div className="space-y-8">
-						<div className="bg-white rounded-lg shadow-md p-8">
-							<h2 className="text-2xl font-bold mb-6">Product Hypothesis</h2>
+					<section aria-labelledby="hypothesis-heading" className="space-y-8">
+						<article className="bg-white rounded-lg shadow-md p-8">
+							<h1 id="hypothesis-heading" className="text-3xl font-bold mb-6">
+								Product Hypothesis
+							</h1>
 
 							<div className="space-y-6">
-								<div>
-									<h3 className="text-lg font-semibold mb-2 text-gray-900">
+								<section>
+									<h2 className="text-xl font-semibold mb-2 text-gray-900">
 										Problem Statement
-									</h3>
+									</h2>
 									<p className="text-gray-600">{productHypothesis.problem}</p>
-								</div>
+								</section>
 
-								<div>
-									<h3 className="text-lg font-semibold mb-2 text-gray-900">
+								<section>
+									<h2 className="text-xl font-semibold mb-2 text-gray-900">
 										Proposed Solution
-									</h3>
+									</h2>
 									<p className="text-gray-600">{productHypothesis.solution}</p>
-								</div>
+								</section>
 
-								<div>
-									<h3 className="text-lg font-semibold mb-2 text-gray-900">
+								<section>
+									<h2 className="text-xl font-semibold mb-2 text-gray-900">
 										Validation
-									</h3>
+									</h2>
 									<p className="text-gray-600">
 										{productHypothesis.validation}
 									</p>
-								</div>
+								</section>
 
-								<div>
-									<h3 className="text-lg font-semibold mb-2 text-gray-900">
+								<section>
+									<h2 className="text-xl font-semibold mb-2 text-gray-900">
 										Key Metrics
-									</h3>
+									</h2>
 									<div className="flex flex-wrap gap-2">
 										{productHypothesis.metrics.map((metric) => (
 											<span
@@ -290,11 +281,11 @@ export default function Home() {
 											</span>
 										))}
 									</div>
-								</div>
+								</section>
 							</div>
-						</div>
+						</article>
 
-						<div className="bg-white rounded-lg shadow-md p-8">
+						<article className="bg-white rounded-lg shadow-md p-8">
 							<h2 className="text-2xl font-bold mb-6">Product Roadmap</h2>
 							<div className="space-y-4">
 								{roadmapItems.map((item) => (
@@ -329,16 +320,24 @@ export default function Home() {
 									</div>
 								))}
 							</div>
-						</div>
-					</div>
+						</article>
+					</section>
 				)}
 
 				{/* Data Flywheel Visualization */}
 				{activeSection === "flywheel" && (
-					<div className="bg-white rounded-lg shadow-md p-8">
-						<h2 className="text-2xl font-bold mb-6">Data Flywheel</h2>
+					<section
+						aria-labelledby="flywheel-heading"
+						className="bg-white rounded-lg shadow-md p-8">
+						<h1 id="flywheel-heading" className="text-3xl font-bold mb-6">
+							Data Flywheel
+						</h1>
 						<div className="flex justify-center mb-6">
-							<svg viewBox="0 0 400 400" className="w-96 h-96">
+							<svg
+								viewBox="0 0 400 400"
+								className="w-96 h-96"
+								role="img"
+								aria-label="Data flywheel visualization">
 								{/* Flywheel Circle */}
 								<circle
 									cx="200"
@@ -453,7 +452,7 @@ export default function Home() {
 							</svg>
 						</div>
 
-						<div className="grid md:grid-cols-4 gap-4 mt-8">
+						<aside className="grid md:grid-cols-4 gap-4 mt-8">
 							<div className="text-center">
 								<div className="text-3xl font-bold text-blue-600">1M+</div>
 								<div className="text-sm text-gray-600">Profiles Analyzed</div>
@@ -470,52 +469,56 @@ export default function Home() {
 								<div className="text-3xl font-bold text-blue-600">24/7</div>
 								<div className="text-sm text-gray-600">Continuous Learning</div>
 							</div>
-						</div>
-					</div>
+						</aside>
+					</section>
 				)}
 
 				{/* Operating Model */}
 				{activeSection === "operating" && (
-					<div className="bg-white rounded-lg shadow-md p-8">
-						<h2 className="text-2xl font-bold mb-6">Operating Model</h2>
+					<section
+						aria-labelledby="operating-heading"
+						className="bg-white rounded-lg shadow-md p-8">
+						<h1 id="operating-heading" className="text-3xl font-bold mb-6">
+							Operating Model
+						</h1>
 
 						<div className="space-y-8">
-							<div>
-								<h3 className="text-lg font-semibold mb-4">
+							<article>
+								<h2 className="text-xl font-semibold mb-4">
 									Service Delivery Model
-								</h3>
+								</h2>
 								<div className="grid md:grid-cols-3 gap-4">
 									<div className="border rounded-lg p-4">
-										<h4 className="font-semibold text-blue-600 mb-2">
+										<h3 className="font-semibold text-blue-600 mb-2">
 											Self-Service
-										</h4>
+										</h3>
 										<p className="text-sm text-gray-600">
 											Automated matching for standard roles with AI-driven
 											recommendations
 										</p>
 									</div>
 									<div className="border rounded-lg p-4">
-										<h4 className="font-semibold text-purple-600 mb-2">
+										<h3 className="font-semibold text-purple-600 mb-2">
 											Managed Service
-										</h4>
+										</h3>
 										<p className="text-sm text-gray-600">
 											Dedicated account management with custom matching criteria
 										</p>
 									</div>
 									<div className="border rounded-lg p-4">
-										<h4 className="font-semibold text-green-600 mb-2">
+										<h3 className="font-semibold text-green-600 mb-2">
 											Enterprise
-										</h4>
+										</h3>
 										<p className="text-sm text-gray-600">
 											Full integration with ATS systems and custom AI model
 											training
 										</p>
 									</div>
 								</div>
-							</div>
+							</article>
 
-							<div>
-								<h3 className="text-lg font-semibold mb-4">Revenue Model</h3>
+							<article>
+								<h2 className="text-xl font-semibold mb-4">Revenue Model</h2>
 								<ul className="space-y-2">
 									<li className="flex items-center">
 										<span className="text-green-500 mr-2">✓</span>
@@ -530,16 +533,16 @@ export default function Home() {
 										<span>Enterprise licensing for unlimited usage</span>
 									</li>
 								</ul>
-							</div>
+							</article>
 
-							<div>
-								<h3 className="text-lg font-semibold mb-4">
+							<article>
+								<h2 className="text-xl font-semibold mb-4">
 									Support Structure
-								</h3>
+								</h2>
 								<div className="bg-gray-50 rounded-lg p-4">
 									<div className="grid md:grid-cols-2 gap-4">
 										<div>
-											<strong>Technical Support:</strong>
+											<h3 className="font-medium">Technical Support:</h3>
 											<ul className="text-sm text-gray-600 mt-1">
 												<li>• 24/7 AI chatbot assistance</li>
 												<li>• Dedicated support engineers</li>
@@ -547,7 +550,7 @@ export default function Home() {
 											</ul>
 										</div>
 										<div>
-											<strong>Customer Success:</strong>
+											<h3 className="font-medium">Customer Success:</h3>
 											<ul className="text-sm text-gray-600 mt-1">
 												<li>• Onboarding specialists</li>
 												<li>• Regular business reviews</li>
@@ -556,9 +559,9 @@ export default function Home() {
 										</div>
 									</div>
 								</div>
-							</div>
+							</article>
 						</div>
-					</div>
+					</section>
 				)}
 			</div>
 
@@ -572,12 +575,12 @@ export default function Home() {
 
 			{/* Sticky Chat Component */}
 			{showChat && (
-				<div
+				<aside
 					className="fixed bottom-24 right-6 w-96 h-[600px] bg-white rounded-lg shadow-2xl z-50 flex flex-col"
-					role="dialog"
+					role="complementary"
 					aria-label="AI Recruitment Assistant">
 					<div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-						<h3 className="font-semibold">AI Recruitment Assistant</h3>
+						<h2 className="font-semibold">AI Recruitment Assistant</h2>
 						<button
 							onClick={() => setShowChat(false)}
 							className="text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-white rounded"
@@ -599,7 +602,7 @@ export default function Home() {
 					<div className="flex-1 overflow-hidden">
 						<Chat onNavigate={handleChatNavigation} />
 					</div>
-				</div>
+				</aside>
 			)}
 
 			{/* Why Match Modal */}
@@ -611,6 +614,6 @@ export default function Home() {
 					setSelectedTalent(null);
 				}}
 			/>
-		</main>
+		</>
 	);
 }
