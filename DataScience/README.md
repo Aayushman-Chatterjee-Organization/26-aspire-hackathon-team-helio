@@ -18,4 +18,4 @@ gcloud run deploy hackathon-26-ml \
  --timeout=300 \
  --automatic-updates \
  --quiet \
- --set-env-vars="BODHI_API_KEY=<placeholder>,ASK_BODHI_API_URL=https://askbodhi-backend-api.dev.psbodhi.live,BODHI_LLM_GATEWAY_URL=https://bodhi-llm-gateway.dev.psbodhi.live,DEFAULT_COLLECTION_NAME=helio,BODHI_LLM_GATEWAY_API_KEY=<placeholder_v2>"
+ --set-env-vars="BODHI_API_KEY=<placeholder>,ASK_BODHI_API_URL=https://askbodhi-backend-api.dev.psbodhi.live,BODHI_LLM_GATEWAY_URL=https://bodhi-llm-gateway.dev.psbodhi.live,BODHI_LLM_GATEWAY_API_KEY=<placeholder>,DEFAULT_COLLECTION_NAME=helio,LOGFIRE_TOKEN=<placeholder>,LOGFIRE_PROJECT_NAME=starter-project,MODEL_NAME=gpt-5.1"

@@ -1,109 +1,93 @@
 "use client";
 
 import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 
 export default function WhyMatchModal({ talent, isOpen, onClose }) {
-	if (!talent) return null;
+	if (!isOpen) return null;
 
-	// Use the API response structure
-	const matchScore = talent.match_score || 0;
-	const matchedSkills = talent.skills_match?.matched || [];
-	const missingSkills = talent.skills_match?.missing || [];
-	const strengths = talent.strengths || [];
-	const gaps = talent.gaps || [];
+	// Handle missing data gracefully
+	const score =
+		talent?.fitScore || talent?.matchScore || talent?.match_score || 0;
+	const skills = talent?.skills || [];
+	const strengths = talent?.strengths || [];
+	const gaps = talent?.gaps || [];
+	const recommendation = talent?.recommendation || "Not specified";
+	const explanation = talent?.explanation || "No explanation available";
 
 	return (
-		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-				<DialogHeader>
-					<DialogTitle className="text-xl">
-						Why {talent.candidate_name} is a Match
-					</DialogTitle>
-				</DialogHeader>
-
-				<div className="space-y-6 mt-4">
-					{/* Overall Match Score */}
-					<div>
-						<div className="flex justify-between items-center mb-2">
-							<h3 className="font-semibold">Overall Match Score</h3>
-							<span className="text-2xl font-bold text-blue-600">
-								{matchScore}%
-							</span>
+		<div
+			className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+			onClick={onClose}
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="why-match-title">
+			<div
+				className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl"
+				onClick={(e) => e.stopPropagation()}>
+				<CardHeader className="sticky top-0 bg-white border-b z-10">
+					<div className="flex justify-between items-start">
+						<div>
+							<CardTitle id="why-match-title" className="text-xl">
+								Why {talent?.name || talent?.candidate_name || "This Candidate"}{" "}
+								is a Match
+							</CardTitle>
+							<p className="text-sm text-muted-foreground mt-1">
+								{talent?.role || talent?.title || "Role not specified"}
+							</p>
 						</div>
-						<Progress value={matchScore} className="h-3" />
+						<button
+							onClick={onClose}
+							className="text-gray-400 hover:text-gray-600 transition-colors"
+							aria-label="Close modal">
+							<X className="h-5 w-5" />
+						</button>
+					</div>
+				</CardHeader>
+
+				<CardContent className="p-6 space-y-6">
+					{/* Match Score */}
+					<div>
+						<h3 className="text-lg font-semibold mb-3">Match Score</h3>
+						<div className="flex items-center gap-4">
+							<div className="text-3xl font-bold text-blue-600">{score}%</div>
+							<div className="flex-1">
+								<Progress value={score} className="h-3" />
+								<p className="text-sm text-muted-foreground mt-1">
+									{score >= 90
+										? "Excellent Match"
+										: score >= 80
+											? "Strong Match"
+											: score >= 70
+												? "Good Match"
+												: "Fair Match"}
+								</p>
+							</div>
+						</div>
 					</div>
 
 					{/* Skills Match */}
 					<div>
-						<h3 className="font-semibold mb-3">Skills Analysis</h3>
-
-						{matchedSkills.length > 0 && (
-							<div className="mb-4">
-								<p className="text-sm text-gray-600 mb-2">
-									Matched Skills ({matchedSkills.length})
-								</p>
-								<div className="flex flex-wrap gap-2">
-									{matchedSkills.map((skill, index) => (
-										<Badge
-											key={index}
-											variant="default"
-											className="bg-green-100 text-green-800">
-											{skill}
-										</Badge>
-									))}
-								</div>
-							</div>
-						)}
-
-						{missingSkills.length > 0 && (
-							<div>
-								<p className="text-sm text-gray-600 mb-2">
-									Missing Skills ({missingSkills.length})
-								</p>
-								<div className="flex flex-wrap gap-2">
-									{missingSkills.slice(0, 5).map((skill, index) => (
-										<Badge
-											key={index}
-											variant="outline"
-											className="text-red-600 border-red-300">
-											{skill}
-										</Badge>
-									))}
-									{missingSkills.length > 5 && (
-										<Badge variant="outline" className="text-gray-600">
-											+{missingSkills.length - 5} more
-										</Badge>
-									)}
-								</div>
-							</div>
-						)}
-					</div>
-
-					{/* Experience Match */}
-					<div>
-						<h3 className="font-semibold mb-2">Experience Analysis</h3>
-						<p className="text-sm text-gray-700 bg-gray-50 p-3 rounded">
-							{talent.experience_match}
-						</p>
+						<h3 className="text-lg font-semibold mb-3">Skills Match</h3>
+						<div className="flex flex-wrap gap-2">
+							{skills.map((skill, index) => (
+								<Badge key={index} variant="secondary">
+									{skill}
+								</Badge>
+							))}
+						</div>
 					</div>
 
 					{/* Strengths */}
 					{strengths.length > 0 && (
 						<div>
-							<h3 className="font-semibold mb-2">Key Strengths</h3>
+							<h3 className="text-lg font-semibold mb-3">Key Strengths</h3>
 							<ul className="space-y-2">
 								{strengths.map((strength, index) => (
 									<li key={index} className="flex items-start">
-										<span className="text-green-600 mr-2">✓</span>
+										<span className="text-green-500 mr-2">✓</span>
 										<span className="text-sm">{strength}</span>
 									</li>
 								))}
@@ -114,47 +98,55 @@ export default function WhyMatchModal({ talent, isOpen, onClose }) {
 					{/* Gaps */}
 					{gaps.length > 0 && (
 						<div>
-							<h3 className="font-semibold mb-2">Areas for Development</h3>
+							<h3 className="text-lg font-semibold mb-3">
+								Areas for Development
+							</h3>
 							<ul className="space-y-2">
-								{gaps.slice(0, 4).map((gap, index) => (
+								{gaps.map((gap, index) => (
 									<li key={index} className="flex items-start">
-										<span className="text-yellow-600 mr-2">!</span>
+										<span className="text-yellow-500 mr-2">!</span>
 										<span className="text-sm">{gap}</span>
 									</li>
 								))}
-								{gaps.length > 4 && (
-									<li className="text-sm text-gray-500">
-										...and {gaps.length - 4} more considerations
-									</li>
-								)}
 							</ul>
 						</div>
 					)}
 
 					{/* Recommendation */}
-					<div className="border-t pt-4">
-						<h3 className="font-semibold mb-2">AI Recommendation</h3>
+					<div>
+						<h3 className="text-lg font-semibold mb-3">Recommendation</h3>
 						<div
 							className={`p-4 rounded-lg ${
-								talent.recommendation === "Highly recommended"
-									? "bg-green-50"
-									: talent.recommendation === "Recommended"
-										? "bg-blue-50"
-										: talent.recommendation === "Consider"
-											? "bg-yellow-50"
-											: "bg-red-50"
+								recommendation === "Highly recommended"
+									? "bg-green-50 text-green-800"
+									: recommendation === "Recommended"
+										? "bg-blue-50 text-blue-800"
+										: recommendation === "Consider"
+											? "bg-yellow-50 text-yellow-800"
+											: "bg-gray-50 text-gray-800"
 							}`}>
-							<p className="font-medium mb-2">{talent.recommendation}</p>
-							<p className="text-sm text-gray-700">{talent.explanation}</p>
+							<p className="font-medium">{recommendation}</p>
 						</div>
 					</div>
 
-					{/* Close Button */}
-					<div className="flex justify-end pt-4 border-t">
-						<Button onClick={onClose}>Close</Button>
+					{/* Detailed Explanation */}
+					<div>
+						<h3 className="text-lg font-semibold mb-3">Detailed Analysis</h3>
+						<p className="text-sm text-gray-600 leading-relaxed">
+							{explanation}
+						</p>
 					</div>
-				</div>
-			</DialogContent>
-		</Dialog>
+
+					{/* AI Attribution */}
+					<div className="border-t pt-4">
+						<p className="text-xs text-center text-gray-500">
+							Match analysis powered by{" "}
+							<span className="font-semibold text-blue-600">Bodhi</span> &{" "}
+							<span className="font-semibold text-purple-600">Slingshot</span>
+						</p>
+					</div>
+				</CardContent>
+			</div>
+		</div>
 	);
 }

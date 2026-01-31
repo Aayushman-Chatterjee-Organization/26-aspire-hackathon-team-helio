@@ -9,7 +9,7 @@ export default function MatchCard({ candidate, rank }) {
 
 	// Determine confidence level and styling based on match_score
 	const getConfidenceStyle = () => {
-		if (candidate.match_score < 60) {
+		if (candidate.match_score < 40) {
 			return {
 				bgColor: "bg-yellow-50",
 				borderColor: "border-yellow-300",
@@ -17,7 +17,7 @@ export default function MatchCard({ candidate, rank }) {
 				scoreColor: "text-yellow-600",
 				message: "Low confidence match - Review carefully",
 			};
-		} else if (candidate.match_score >= 85) {
+		} else if (candidate.match_score >= 70) {
 			return {
 				bgColor: "bg-green-50",
 				borderColor: "border-green-300",
@@ -74,7 +74,7 @@ export default function MatchCard({ candidate, rank }) {
 	return (
 		<>
 			<div
-				className={`${confidenceStyle.bgColor} rounded-lg shadow-md p-6 hover:shadow-lg transition-all cursor-pointer border-2 ${confidenceStyle.borderColor}`}
+				className={`rounded-lg shadow-md p-6 hover:shadow-lg transition-all cursor-pointer border-2`}
 				onClick={() => console.log("View candidate details:", candidate)}
 				onKeyDown={(e) =>
 					e.key === "Enter" && console.log("View candidate details:", candidate)

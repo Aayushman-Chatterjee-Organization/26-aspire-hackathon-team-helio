@@ -94,3 +94,41 @@ npx shadcn@latest add aspect-ratio
 npx shadcn@latest add alert-dialog
 npx shadcn@latest add alert
 npx shadcn@latest add accordion
+
+#Login Password:
+
+Username: PS
+Password: PS@1234
+
+#Firebase Deploy:
+
+npm install -g firebase-tools
+firebase login
+npm install firebase firebase-admin
+
+firebase init
+
+firebase init hosting
+
+firebase experiments:enable webframeworks
+
+firebase deploy
+
+=====
+
+firebase experiments:enable webframeworks
+
+===
+
+gcloud run deploy hackathon-26-fe \
+ --source . \
+ --region us-central1 \
+ --memory=2Gi \
+ --cpu=1 \
+ --concurrency=4 \
+ --min-instances=0 \
+ --max-instances=5 \
+ --port=8080 \
+ --timeout=300 \
+ --automatic-updates \
+ --quiet
