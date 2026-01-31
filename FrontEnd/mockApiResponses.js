@@ -1,0 +1,55 @@
+// Mock API responses based on api-contract.json
+
+export const mockJobDescriptionResponse = {
+  job_description: "We are seeking an experienced AWS Cloud Engineer to join our dynamic team. The ideal candidate will have 5+ years of hands-on experience with AWS services and infrastructure. You will be responsible for designing, implementing, and maintaining scalable cloud solutions for our retail/healthcare clients. Key responsibilities include architecting cloud infrastructure, implementing CI/CD pipelines, ensuring security best practices, and optimizing cloud costs. Strong knowledge of AWS services (EC2, S3, Lambda, RDS, etc.), Infrastructure as Code (Terraform/CloudFormation), and containerization technologies is required. Experience in retail or healthcare domains is a plus."
+};
+
+export const mockRecommendResponse = {
+  job_summary: "Data Scientist role requiring strong programming, statistical analysis, and data manipulation skills, with additional preference for big data technologies and cloud platforms experience.",
+  total_candidates_found: 3,
+  ranked_candidates: [
+    {
+      rank: 1,
+      candidate_name: "Charles Benson",
+      match_score: 77,
+      skills_match: {
+        matched: ["Python", "Machine Learning", "Cloud Platforms", "Data Visualization"],
+        missing: ["R", "Big Data Technologies", "Version Control Systems"]
+      },
+      experience_match: "13 years in data-related roles, Director-level experience suggests leadership in data strategies and implementation, though not in traditional data science setting.",
+      strengths: ["Machine Learning", "Cloud Architecture", "Data Visualization"],
+      gaps: ["Big Data Technologies", "Known Statistical Analysis expertise", "Domain specific to tech/data science"],
+      recommendation: "Highly recommended",
+      explanation: "Charles has strong alignment with essential skills like machine learning and data visualization. His expertise in PyTorch and cloud architecture complements data science needs, despite lacking big data and explicit stats experience. His extensive tech background and leadership suggest potential for rapid adaptation to data science contexts."
+    },
+    {
+      rank: 2,
+      candidate_name: "Eric Alexander",
+      match_score: 65,
+      skills_match: {
+        matched: ["Python", "Cloud Platforms", "Programming Languages"],
+        missing: ["R", "Statistical Analysis", "Data Visualization", "Database Management"]
+      },
+      experience_match: "Broad experience including a Director role in Engineering and modern AI certifications, but lacks explicit data science/statistical application.",
+      strengths: ["Programming in Python", "Knowledge of Cloud Platforms", "Understanding of AI concepts"],
+      gaps: ["Limited Statistical Analysis", "No Machine Learning Library specifics", "No Data Visualization"],
+      recommendation: "Recommended",
+      explanation: "Eric's strength lies in his programming skills and cloud computing experience, vital for data science infrastructure. However, the absence of clear statistical analysis and visualization tools knowledge presents a barrier for direct data scientist responsibilities."
+    },
+    {
+      rank: 3,
+      candidate_name: "Patricia Leblanc",
+      match_score: 60,
+      skills_match: {
+        matched: ["Data Visualization", "SQL"],
+        missing: ["Python", "R", "Machine Learning", "Cloud Platforms", "Big Data Technologies"]
+      },
+      experience_match: "14 years of creative experience with data aspects and senior-level management, but minimal direct overlap with data science roles.",
+      strengths: ["Data Visualization", "Agile Leadership Skills"],
+      gaps: ["Lack of Programming in Python/R", "Limited Statistical Analysis", "Little Mention of Machine Learning"],
+      recommendation: "Consider",
+      explanation: "Patricia offers high creativity and experience in data visualization, with strong SQL skills. Nonetheless, her non-traditional background requires training in core data science competencies, such as machine learning and statistical programming, to fill existing gaps."
+    }
+  ],
+  search_summary: "The search combined candidate skills and background details with job requirements focusing on essential data science capabilities, including programming, statistical analysis, and familiarity with machine learning and data visualization."
+};

@@ -12,6 +12,7 @@ import {
 	X,
 	LogOut,
 	User,
+	Sparkles,
 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
@@ -29,6 +30,7 @@ export default function Header() {
 
 	const navigation = [
 		{ name: "Dashboard", href: "/", icon: Home },
+		{ name: "AI Quiz", href: "/quiz", icon: Sparkles },
 		{ name: "Matches", href: "/matches", icon: Users },
 		// { name: "AI Insights", href: "/insights", icon: Brain },
 		// { name: "Analytics", href: "/analytics", icon: BarChart3 },

@@ -7,7 +7,7 @@ import Chat from "./components/Chat";
 import WhyMatchModal from "./components/WhyMatchModal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Sparkles } from "lucide-react";
 
 export default function Home() {
 	const router = useRouter();
@@ -135,24 +135,33 @@ export default function Home() {
 									right opportunities, reducing time-to-hire while improving
 									match quality.
 								</p>
-								<Link
-									href="/matches"
-									className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-									aria-label="View talent matches">
-									View Matches
-									<svg
-										className="ml-2 w-5 h-5"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24">
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M9 5l7 7-7 7"
-										/>
-									</svg>
-								</Link>
+								<div className="flex gap-4">
+									<Link
+										href="/quiz"
+										className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+										aria-label="Start AI-powered matching quiz">
+										<Sparkles className="mr-2 w-5 h-5" />
+										Find Talent with AI
+									</Link>
+									<Link
+										href="/matches"
+										className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+										aria-label="View talent matches">
+										View All Matches
+										<svg
+											className="ml-2 w-5 h-5"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24">
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M9 5l7 7-7 7"
+											/>
+										</svg>
+									</Link>
+								</div>
 							</article>
 
 							{/* Talent Grid */}
