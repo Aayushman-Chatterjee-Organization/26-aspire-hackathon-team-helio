@@ -33,7 +33,7 @@ import {
 	noticePeriodOptions,
 	craftOptions,
 	industryOptions,
-} from "../data/mockDropdownOptions";
+} from "../data/mockDropDownOptions";
 
 export default function QuizPage() {
 	const router = useRouter();
