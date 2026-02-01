@@ -293,7 +293,22 @@ export default function MatchesPage() {
 								</div>
 								<div className="flex items-center justify-between">
 									<span className="text-sm">Primary Skill</span>
-									<Badge>{quizAnswers.required_skills || "N/A"}</Badge>
+									{/* CHANGE: Fixed required_skills display to properly format array with comma separation */}
+									<div className="flex flex-wrap gap-2">
+										{Array.isArray(quizAnswers.required_skills) ? (
+											quizAnswers.required_skills.map((skill, i) => (
+												<span
+													key={i}
+													className="bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-sm">
+													{skill}
+												</span>
+											))
+										) : (
+											<span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-sm">
+												N/A
+											</span>
+										)}
+									</div>
 								</div>
 								<div className="flex items-center justify-between">
 									<span className="text-sm">Experience</span>
@@ -333,7 +348,7 @@ export default function MatchesPage() {
 										<span>
 											{
 												candidates.filter(
-													(c) => c.match_score >= 60 && c.match_score < 70,
+													(c) => c.match_score >= 40 && c.match_score < 70,
 												).length
 											}
 										</span>
