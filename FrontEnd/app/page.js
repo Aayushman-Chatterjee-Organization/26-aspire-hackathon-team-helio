@@ -90,103 +90,74 @@ export default function Home() {
 				Skip to main content
 			</a>
 
-			{/* Navigation Tabs */}
-			<nav
-				className="bg-white border-b border-gray-200"
-				role="navigation"
-				aria-label="Section navigation">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex space-x-8">
-						{["overview", "impact", "hypothesis", "flywheel", "operating"].map(
-							(section) => (
-								<button
-									key={section}
-									onClick={() => setActiveSection(section)}
-									className={`py-4 px-1 border-b-2 font-medium text-sm capitalize transition-colors ${
-										activeSection === section
-											? "border-blue-500 text-blue-600"
-											: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-									}`}
-									aria-current={activeSection === section ? "page" : undefined}>
-									{section === "flywheel" ? "Data Flywheel" : section}
-								</button>
-							),
-						)}
-					</div>
-				</div>
-			</nav>
-
 			<div
 				id="main-content"
 				className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 				{/* Overview Section */}
-				{activeSection === "overview" && (
-					<section aria-labelledby="overview-heading">
-						<h1 id="overview-heading" className="sr-only">
-							AI-Powered Talent Matching Overview
-						</h1>
-						<div className="space-y-8">
-							<article className="bg-white rounded-lg shadow-md p-6">
-								<h2 className="text-2xl font-bold mb-4">
-									AI-Powered Talent Matching
-								</h2>
-								<p className="text-gray-600 mb-6">
-									Leveraging advanced AI to connect the right talent with the
-									right opportunities, reducing time-to-hire while improving
-									match quality.
-								</p>
-								<div className="flex gap-4">
-									<Link
-										href="/quiz"
-										className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-										aria-label="Start AI-powered matching quiz">
-										<Sparkles className="mr-2 w-5 h-5" />
-										Find Talent with AI
-									</Link>
-									<Link
-										href="/matches"
-										className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-										aria-label="View talent matches">
-										View All Matches
-										<svg
-											className="ml-2 w-5 h-5"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24">
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M9 5l7 7-7 7"
-											/>
-										</svg>
-									</Link>
-								</div>
-							</article>
 
-							{/* Talent Grid */}
-							<section aria-labelledby="featured-talents">
-								<h2
-									id="featured-talents"
-									className="text-xl font-semibold mb-4">
-									Featured Talents
-								</h2>
-								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-									{mockTalents.slice(0, 6).map((talent) => (
-										<TalentCard
-											key={talent.id}
-											talent={talent}
-											onViewDetails={handleViewDetails}
+				<section aria-labelledby="overview-heading">
+					<h1 id="overview-heading" className="sr-only">
+						AI-Powered Talent Matching Overview
+					</h1>
+					<div className="space-y-8">
+						<article className="bg-white rounded-lg shadow-md p-6">
+							<h2 className="text-2xl font-bold mb-4">
+								AI-Powered Talent Matching
+							</h2>
+							<p className="text-gray-600 mb-6">
+								Leveraging advanced AI to connect the right talent with the
+								right opportunities, reducing time-to-hire while improving match
+								quality.
+							</p>
+							<div className="flex gap-4">
+								<Link
+									href="/quiz"
+									className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+									aria-label="Start AI-powered matching quiz">
+									<Sparkles className="mr-2 w-5 h-5" />
+									Find Talent with AI
+								</Link>
+								<Link
+									href="/matches"
+									className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+									aria-label="View talent matches">
+									View All Matches
+									<svg
+										className="ml-2 w-5 h-5"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24">
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M9 5l7 7-7 7"
 										/>
-									))}
-								</div>
-							</section>
-						</div>
-					</section>
-				)}
+									</svg>
+								</Link>
+							</div>
+						</article>
+
+						{/* Talent Grid */}
+						<section aria-labelledby="featured-talents">
+							<h2 id="featured-talents" className="text-xl font-semibold mb-4">
+								Featured Talents
+							</h2>
+							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+								{mockTalents.slice(0, 6).map((talent) => (
+									<TalentCard
+										key={talent.id}
+										talent={talent}
+										onViewDetails={handleViewDetails}
+									/>
+								))}
+							</div>
+						</section>
+					</div>
+				</section>
 
 				{/* Business Impact Section */}
-				{activeSection === "impact" && (
+				{/* {activeSection === "impact" && (
 					<section
 						aria-labelledby="impact-heading"
 						className="bg-white rounded-lg shadow-md p-8">
@@ -243,10 +214,10 @@ export default function Home() {
 							</aside>
 						</div>
 					</section>
-				)}
+				)} */}
 
 				{/* Product Hypothesis & Roadmap */}
-				{activeSection === "hypothesis" && (
+				{/* {activeSection === "hypothesis" && (
 					<section aria-labelledby="hypothesis-heading" className="space-y-8">
 						<article className="bg-white rounded-lg shadow-md p-8">
 							<h1 id="hypothesis-heading" className="text-3xl font-bold mb-6">
@@ -331,10 +302,10 @@ export default function Home() {
 							</div>
 						</article>
 					</section>
-				)}
+				)} */}
 
 				{/* Data Flywheel Visualization */}
-				{activeSection === "flywheel" && (
+				{/* {activeSection === "flywheel" && (
 					<section
 						aria-labelledby="flywheel-heading"
 						className="bg-white rounded-lg shadow-md p-8">
@@ -347,7 +318,6 @@ export default function Home() {
 								className="w-96 h-96"
 								role="img"
 								aria-label="Data flywheel visualization">
-								{/* Flywheel Circle */}
 								<circle
 									cx="200"
 									cy="200"
@@ -356,8 +326,6 @@ export default function Home() {
 									stroke="#e5e7eb"
 									strokeWidth="30"
 								/>
-
-								{/* Animated segments */}
 								<circle
 									cx="200"
 									cy="200"
@@ -369,8 +337,6 @@ export default function Home() {
 									strokeDashoffset="-157"
 									className="animate-pulse"
 								/>
-
-								{/* Center hub */}
 								<circle cx="200" cy="200" r="60" fill="#1e40af" />
 								<text
 									x="200"
@@ -381,8 +347,6 @@ export default function Home() {
 									fontWeight="bold">
 									AI Engine
 								</text>
-
-								{/* Flywheel stages */}
 								<g transform="translate(200, 80)">
 									<rect
 										x="-60"
@@ -480,10 +444,8 @@ export default function Home() {
 							</div>
 						</aside>
 					</section>
-				)}
-
-				{/* Operating Model */}
-				{activeSection === "operating" && (
+				)} */}
+				{/* {activeSection === "operating" && (
 					<section
 						aria-labelledby="operating-heading"
 						className="bg-white rounded-lg shadow-md p-8">
@@ -571,7 +533,7 @@ export default function Home() {
 							</article>
 						</div>
 					</section>
-				)}
+				)} */}
 			</div>
 
 			{/* Sticky Chat Button */}

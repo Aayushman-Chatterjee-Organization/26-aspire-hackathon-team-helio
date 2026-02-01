@@ -87,7 +87,7 @@ export default function WhyMatchModal({ talent, isOpen, onClose }) {
 							<ul className="space-y-2">
 								{strengths.map((strength, index) => (
 									<li key={index} className="flex items-start">
-										<span className="text-green-500 mr-2">✓</span>
+										<span className="text-green-700 mr-2">✓</span>
 										<span className="text-sm">{strength}</span>
 									</li>
 								))}
@@ -104,7 +104,7 @@ export default function WhyMatchModal({ talent, isOpen, onClose }) {
 							<ul className="space-y-2">
 								{gaps.map((gap, index) => (
 									<li key={index} className="flex items-start">
-										<span className="text-yellow-500 mr-2">!</span>
+										<span className="text-yellow-700 mr-2">!</span>
 										<span className="text-sm">{gap}</span>
 									</li>
 								))}

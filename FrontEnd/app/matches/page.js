@@ -33,6 +33,31 @@ export default function MatchesPage() {
 	const [quizAnswers, setQuizAnswers] = useState({});
 	// CHANGE: Add ref to prevent duplicate API calls
 	const fetchInitiated = useRef(false);
+	// CHANGE: Add state for loading phrase rotation
+	const [loadingPhraseIndex, setLoadingPhraseIndex] = useState(0);
+
+	// CHANGE: Add loading phrases array
+	const loadingPhrases = [
+		"Finding the perfect candidate for you",
+		"Looking up all our candidate database",
+		"Analyzing skill matches",
+		"Calculating compatibility scores",
+		"Reviewing experience levels",
+		"Matching your requirements",
+		"Almost there, finalizing results",
+		"Discovering top talent",
+	];
+
+	// CHANGE: Add effect for rotating loading phrases
+	useEffect(() => {
+		if (!isLoading) return;
+
+		const interval = setInterval(() => {
+			setLoadingPhraseIndex((prev) => (prev + 1) % loadingPhrases.length);
+		}, 2000);
+
+		return () => clearInterval(interval);
+	}, [isLoading, loadingPhrases.length]);
 
 	useEffect(() => {
 		// CHANGE: Check if fetch already initiated to prevent double calls
@@ -82,10 +107,100 @@ export default function MatchesPage() {
 		return (
 			<div className="min-h-screen flex flex-col">
 				<main className="flex-1 container mx-auto px-4 py-8">
-					<div className="text-center py-12">
-						<p className="text-lg">
-							Finding the best matches for your requirements...
-						</p>
+					{/* CHANGE: Enhanced loading component with animations */}
+					<div className="flex flex-col items-center justify-center min-h-[60vh]">
+						{/* CHANGE: Animated dots loader */}
+						<div className="mb-8" role="status" aria-label="Loading matches">
+							<div className="flex space-x-2">
+								{[0, 1, 2, 3].map((index) => (
+									<div
+										key={index}
+										className="w-3 h-3 bg-blue-600 rounded-full animate-pulse"
+										style={{
+											animationDelay: `${index * 0.15}s`,
+											animationDuration: "1.4s",
+										}}
+									/>
+								))}
+							</div>
+						</div>
+
+						{/* CHANGE: Rotating text with fade animation */}
+						<div className="relative h-8 w-full max-w-md overflow-hidden">
+							<p
+								className="text-lg text-center text-gray-700 absolute inset-0 transition-all duration-500 ease-in-out"
+								style={{
+									opacity: 1,
+									transform: "translateY(0)",
+									animation: "fadeInOut 2s infinite",
+								}}
+								aria-live="polite"
+								aria-atomic="true">
+								{loadingPhrases[loadingPhraseIndex]}
+							</p>
+						</div>
+
+						{/* CHANGE: Progress indicator */}
+						<div className="mt-8 w-full max-w-xs">
+							<div className="h-1 bg-gray-200 rounded-full overflow-hidden">
+								<div
+									className="h-full bg-blue-600 rounded-full transition-all duration-300"
+									style={{
+										width: `${((loadingPhraseIndex + 1) / loadingPhrases.length) * 100}%`,
+										animation: "shimmer 1.5s infinite",
+									}}
+								/>
+							</div>
+						</div>
+
+						{/* CHANGE: Add CSS animations via style tag */}
+						<style jsx>{`
+							@keyframes fadeInOut {
+								0%,
+								100% {
+									opacity: 0;
+									transform: translateY(10px);
+								}
+								20%,
+								80% {
+									opacity: 1;
+									transform: translateY(0);
+								}
+							}
+
+							@keyframes shimmer {
+								0% {
+									transform: translateX(-100%);
+								}
+								100% {
+									transform: translateX(100%);
+								}
+							}
+
+							@media (prefers-reduced-motion: reduce) {
+								.animate-pulse {
+									animation: none;
+								}
+
+								@keyframes fadeInOut {
+									0%,
+									100% {
+										opacity: 0.7;
+									}
+									20%,
+									80% {
+										opacity: 1;
+									}
+								}
+
+								@keyframes shimmer {
+									0%,
+									100% {
+										transform: none;
+									}
+								}
+							}
+						`}</style>
 					</div>
 				</main>
 			</div>
@@ -107,11 +222,19 @@ export default function MatchesPage() {
 				<div className="grid gap-6 lg:grid-cols-3">
 					<div className="lg:col-span-2">
 						<Tabs value={activeTab} onValueChange={setActiveTab}>
-							<TabsList className="grid w-full grid-cols-2">
-								<TabsTrigger value="matches">
+							{/* CHANGE: Added bg-gray-100 for better contrast and visual separation */}
+							<TabsList className="grid w-full grid-cols-2 bg-gray-100">
+								{/* CHANGE: Added data-state styling for active tab underline and better contrast */}
+								<TabsTrigger
+									value="matches"
+									className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600">
 									Matches ({totalCandidates})
 								</TabsTrigger>
-								<TabsTrigger value="job-details">Job Details</TabsTrigger>
+								<TabsTrigger
+									value="job-details"
+									className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600">
+									Job Details
+								</TabsTrigger>
 							</TabsList>
 
 							<TabsContent value="matches" className="space-y-4">
@@ -141,8 +264,10 @@ export default function MatchesPage() {
 							<TabsContent value="job-details">
 								<Card>
 									<CardHeader>
-										<CardTitle>Job Description</CardTitle>
-										<CardDescription>{jobSummary}</CardDescription>
+										<CardTitle className="text-gray-900">
+											Job Description
+										</CardTitle>
+										{/* CHANGE: Removed CardDescription to avoid duplicate job summary */}
 									</CardHeader>
 									<CardContent>
 										<div className="prose max-w-none">
@@ -163,29 +288,27 @@ export default function MatchesPage() {
 							</CardHeader>
 							<CardContent className="space-y-4">
 								<div className="flex items-center justify-between">
-									<span className="text-sm text-gray-500">
-										Total Candidates
-									</span>
+									<span className="text-sm">Total Candidates</span>
 									<span className="font-medium">{totalCandidates}</span>
 								</div>
 								<div className="flex items-center justify-between">
-									<span className="text-sm text-gray-500">Primary Skill</span>
+									<span className="text-sm">Primary Skill</span>
 									<Badge>{quizAnswers.required_skills || "N/A"}</Badge>
 								</div>
 								<div className="flex items-center justify-between">
-									<span className="text-sm text-gray-500">Experience</span>
+									<span className="text-sm">Experience</span>
 									<span className="font-medium">
 										{quizAnswers.min_experience || "N/A"}
 									</span>
 								</div>
 								<div className="flex items-center justify-between">
-									<span className="text-sm text-gray-500">Notice Period</span>
+									<span className="text-sm">Notice Period</span>
 									<span className="font-medium">
 										{quizAnswers.notice_period || "N/A"}
 									</span>
 								</div>
 								<div className="flex items-center justify-between">
-									<span className="text-sm text-gray-500">Industry</span>
+									<span className="text-sm">Industry</span>
 									<Badge variant="outline">
 										{quizAnswers.industry || "N/A"}
 									</Badge>
@@ -202,7 +325,7 @@ export default function MatchesPage() {
 									<div className="flex justify-between text-sm">
 										<span>Excellent Matches</span>
 										<span>
-											{candidates.filter((c) => c.match_score >= 80).length}
+											{candidates.filter((c) => c.match_score >= 70).length}
 										</span>
 									</div>
 									<div className="flex justify-between text-sm">
@@ -210,7 +333,7 @@ export default function MatchesPage() {
 										<span>
 											{
 												candidates.filter(
-													(c) => c.match_score >= 60 && c.match_score < 80,
+													(c) => c.match_score >= 60 && c.match_score < 70,
 												).length
 											}
 										</span>
@@ -218,7 +341,7 @@ export default function MatchesPage() {
 									<div className="flex justify-between text-sm">
 										<span>Fair Matches</span>
 										<span>
-											{candidates.filter((c) => c.match_score < 60).length}
+											{candidates.filter((c) => c.match_score < 40).length}
 										</span>
 									</div>
 								</div>

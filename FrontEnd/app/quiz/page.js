@@ -78,6 +78,10 @@ export default function QuizPage() {
 	const filteredSkills = availableSkills.filter((skill) =>
 		skill.toLowerCase().includes(skillSearchTerm.toLowerCase()),
 	);
+	useEffect(() => {
+		// Store the entire form in sessionStorage whenever it changes
+		sessionStorage.setItem("quizAnswers", JSON.stringify(formData));
+	}, [formData]);
 
 	// Handle clicking outside to close dropdown
 	useEffect(() => {
@@ -244,12 +248,14 @@ export default function QuizPage() {
 							className={`flex-1 h-1 mx-4 ${currentStep >= 2 ? "bg-blue-600" : "bg-gray-200"}`}
 						/>
 						<div
-							className={`flex items-center ${currentStep >= 2 ? "text-blue-600" : "text-gray-400"}`}>
+							className={`flex items-center ${currentStep >= 2 ? "text-blue-700" : "text-gray-700"}`}>
 							<div
-								className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 2 ? "bg-blue-600 text-white" : "bg-gray-200"}`}>
+								className={`w-8 h-8 rounded-full flex items-center justify-center ${currentStep >= 2 ? "bg-blue-600 text-white" : "bg-gray-300"}`}>
 								2
 							</div>
-							<span className="ml-2 font-medium">Job Description</span>
+							<span className="ml-2 font-medium text-gray-800">
+								Job Description
+							</span>
 						</div>
 					</div>
 				</div>
@@ -295,7 +301,7 @@ export default function QuizPage() {
 							<div className="space-y-2">
 								<Label
 									htmlFor="skills"
-									className={!formData.craft ? "text-gray-400" : ""}>
+									style={{ color: formData.craft ? "#0A0A0A" : "#555555" }}>
 									Required Skills *
 								</Label>
 								<div className="space-y-2">

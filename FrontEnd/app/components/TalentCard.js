@@ -13,7 +13,8 @@ export default function TalentCard({ talent, onViewDetails, onSelect }) {
 
 	const getFitScoreColor = (score) => {
 		if (score >= 90) return "text-green-600";
-		if (score >= 80) return "text-yellow-600";
+		// CHANGE: Updated from text-yellow-600 to text-amber-700 for better color contrast
+		if (score >= 80) return "text-amber-700";
 		return "text-orange-600";
 	};
 

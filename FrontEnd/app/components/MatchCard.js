@@ -13,8 +13,8 @@ export default function MatchCard({ candidate, rank }) {
 			return {
 				bgColor: "bg-yellow-50",
 				borderColor: "border-yellow-300",
-				textColor: "text-yellow-700",
-				scoreColor: "text-yellow-600",
+				textColor: "text-amber-700",
+				scoreColor: "text-amber-700",
 				message: "Low confidence match - Review carefully",
 			};
 		} else if (candidate.match_score >= 70) {
@@ -107,7 +107,7 @@ export default function MatchCard({ candidate, rank }) {
 						role="alert">
 						<div className="flex items-center">
 							<svg
-								className="w-5 h-5 text-yellow-600 mr-2"
+								className="w-5 h-5 text-amber-700 mr-2"
 								fill="currentColor"
 								viewBox="0 0 20 20">
 								<path
@@ -247,7 +247,7 @@ export default function MatchCard({ candidate, rank }) {
 																? "text-green-600"
 																: point.confidence >= 60
 																	? "text-blue-600"
-																	: "text-yellow-600"
+																	: "text-amber-700"
 														}`}>
 														{point.confidence}%
 													</span>
@@ -278,7 +278,7 @@ export default function MatchCard({ candidate, rank }) {
 										<p
 											className={`font-medium ${
 												candidate.match_score < 60
-													? "text-yellow-700"
+													? "text-amber-700"
 													: "text-green-700"
 											}`}>
 											{aiReasoningData.recommendation}
