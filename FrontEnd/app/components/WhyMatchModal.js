@@ -11,7 +11,7 @@ export default function WhyMatchModal({ talent, isOpen, onClose }) {
 	// Handle missing data gracefully
 	const score =
 		talent?.fitScore || talent?.matchScore || talent?.match_score || 0;
-	const skills = talent?.skills || [];
+	const skills = talent?.skills_match?.matched || [];
 	const strengths = talent?.strengths || [];
 	const gaps = talent?.gaps || [];
 	const recommendation = talent?.recommendation || "Not specified";
