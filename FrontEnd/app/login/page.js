@@ -46,7 +46,9 @@ export default function LoginPage() {
 				{/* Right Panel - Login Form */}
 				<div className="w-full md:w-1/2 p-8 md:p-12">
 					<div className="max-w-md mx-auto">
-						<h1 className="text-2xl font-semibold mb-2">Welcome back</h1>
+						<h1 className="text-2xl font-semibold mb-2">
+							Welcome to TalentFlow
+						</h1>
 						<p className="text-gray-600 mb-8">Login to your account</p>
 
 						<form onSubmit={handleSubmit} className="space-y-6">
