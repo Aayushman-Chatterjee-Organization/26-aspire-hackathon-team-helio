@@ -8,7 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-	title: "Talent Match AI - Powered by PS AI Tools",
+	title: "TalentFlow - Powered by PS AI Tools",
 	description:
 		"AI-powered talent matching platform using Bodhi for profile enrichment and Slingshot for AI orchestration",
 };
