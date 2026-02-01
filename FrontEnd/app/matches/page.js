@@ -227,12 +227,12 @@ export default function MatchesPage() {
 								{/* CHANGE: Added data-state styling for active tab underline and better contrast */}
 								<TabsTrigger
 									value="matches"
-									className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600">
+									className="data-[state=active]:text-blue-600">
 									Matches ({totalCandidates})
 								</TabsTrigger>
 								<TabsTrigger
 									value="job-details"
-									className="data-[state=active]:border-b-2 data-[state=active]:border-blue-600 data-[state=active]:text-blue-600">
+									className="data-[state=active]:text-blue-600">
 									Job Details
 								</TabsTrigger>
 							</TabsList>

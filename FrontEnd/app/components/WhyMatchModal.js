@@ -87,7 +87,7 @@ export default function WhyMatchModal({ talent, isOpen, onClose }) {
 							<ul className="space-y-2">
 								{strengths.map((strength, index) => (
 									<li key={index} className="flex items-start">
-										<span className="text-green-700 mr-2">✓</span>
+										<span className="text-green-800 mr-2">✓</span>
 										<span className="text-sm">{strength}</span>
 									</li>
 								))}

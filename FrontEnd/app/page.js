@@ -290,7 +290,7 @@ export default function Home() {
 										<span
 											className={`px-3 py-1 rounded-full text-sm ${
 												item.status === "completed"
-													? "bg-green-100 text-green-700"
+													? "bg-green-100 text-green-800"
 													: item.status === "in-progress"
 														? "bg-blue-100 text-blue-700"
 														: "bg-gray-100 text-gray-700"
@@ -477,7 +477,7 @@ export default function Home() {
 										</p>
 									</div>
 									<div className="border rounded-lg p-4">
-										<h3 className="font-semibold text-green-600 mb-2">
+										<h3 className="font-semibold text-green-800 mb-2">
 											Enterprise
 										</h3>
 										<p className="text-sm text-gray-600">

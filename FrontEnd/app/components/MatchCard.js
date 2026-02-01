@@ -21,8 +21,8 @@ export default function MatchCard({ candidate, rank }) {
 			return {
 				bgColor: "bg-green-50",
 				borderColor: "border-green-300",
-				textColor: "text-green-700",
-				scoreColor: "text-green-600",
+				textColor: "text-green-800",
+				scoreColor: "text-green-800",
 				message: "High confidence match",
 			};
 		}
@@ -38,7 +38,8 @@ export default function MatchCard({ candidate, rank }) {
 	const confidenceStyle = getConfidenceStyle();
 
 	// Extract first matched skill for display
-	const primarySkill = candidate.skills_match?.matched?.[0] || "N/A";
+	const primarySkill =
+		candidate.skills_match?.matched?.[0] || "No Primary Skill matched";
 
 	// Count matched vs missing skills
 	const matchedCount = candidate.skills_match?.matched?.length || 0;
@@ -244,7 +245,7 @@ export default function MatchCard({ candidate, rank }) {
 													<span
 														className={`font-semibold ${
 															point.confidence >= 80
-																? "text-green-600"
+																? "text-green-800"
 																: point.confidence >= 60
 																	? "text-blue-600"
 																	: "text-amber-700"
@@ -279,7 +280,7 @@ export default function MatchCard({ candidate, rank }) {
 											className={`font-medium ${
 												candidate.match_score < 60
 													? "text-amber-700"
-													: "text-green-700"
+													: "text-green-800"
 											}`}>
 											{aiReasoningData.recommendation}
 										</p>
